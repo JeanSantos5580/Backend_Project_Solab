@@ -5,7 +5,9 @@ import { routes } from "./routes";
 const app = express();
 const port = 3001;
 
-app.use(cors());
+app.use(cors({
+  "origin": "*"
+}));
 app.use(express.json());
 
 routes.map((route) => app.use(route.path, route.router));
