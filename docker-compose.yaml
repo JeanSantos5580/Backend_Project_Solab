@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  backend_chat:
+    image: sundata
+    build: .
+    networks:
+      - minha_rede # aqui mudamos para traefik para que backend e redis estejam na mesma rede
+    ports:
+      - 3001:3001
+      
+    #deploy:
+    #  mode: replicated
+    #  replicas: 1
+    #labels:
+    #  - "traefik.http.routers.backend_chat.rule=Host(`js-webdev.com.br`) && PathPrefix(`/api`)"
+    #  - "traefik.http.routers.backend_chat.entrypoints=web"
+#
+#  - "traefik.http.routers.backend_chat.middlewares=redirect-to-https"
+#  - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+#  - "traefik.http.routers.backend_chat.entrypoints=websecure"
+#  - "traefik.http.routers.backend_chat.tls=true"
+#  - "traefik.http.routers.backend_chat.tls.certresolver=ssl"
+#  - "traefik.http.routers.backend_chat.priority=100"
+#
+#  # Configuração para rotear WebSocket para a porta 5000
+#  - "traefik.http.routers.backend_ws.rule=Host(`js-webdev.com.br`) && Path(`/socket.io/`)"
+#  - "traefik.http.routers.backend_ws.entrypoints=web"
+#  - "traefik.http.routers.backend_ws.entrypoints=websecure"
+#  - "traefik.http.routers.backend_ws.tls=true"
+#  - "traefik.http.routers.backend_ws.tls.certresolver=ssl"
+#  - "traefik.http.routers.backend_ws.priority=150"
+#  - "traefik.http.services.backend_ws.loadbalancer.server.port=5000" # Define a porta 5000 como a porta de destino
+#
+networks:
+  minha_rede: # a rede traefik foi substituída por traefik
+    external: true
