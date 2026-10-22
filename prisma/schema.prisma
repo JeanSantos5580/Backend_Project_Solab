@@ -29,5 +29,6 @@ model Sundata {
   nov    Int?
   dec    Int?
 
+  @@index([state, city])
   @@map("sundata")
 }

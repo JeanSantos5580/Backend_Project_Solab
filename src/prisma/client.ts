@@ -1,7 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 
-const prismaClient = new PrismaClient({
-  log: ["error", "info", "query", "warn"],
-});
+const globalForPrisma = globalThis as unknown as {
+  prismaClient?: PrismaClient;
+};
 
-export { prismaClient };
+export const prismaClient =
+  globalForPrisma.prismaClient ??
+  new PrismaClient({
+    log: ["warn", "error"]
+  });
+
+if (process.env.NODE_ENV !== "production") {
+  globalForPrisma.prismaClient = prismaClient;
+}
